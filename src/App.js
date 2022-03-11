@@ -40,11 +40,13 @@ function App() {
   const [name,setName] = useState("");
   const [age,setAge] = useState(0);
   const [listOfFriends, setListOfFriends] = useState([]);
+  const [isPending, setIsPending] = useState(true);
 
     useEffect(() => {
       Axios.get("https://mern-beginner-friends-app.herokuapp.com/read")
       .then((response) => {
         setListOfFriends(response.data);
+        setIsPending(false);
       })
       .catch(() => {
         alert("it didnt work");
@@ -103,7 +105,7 @@ function App() {
       }} />
        <button onClick={addFriend}> Add Friend </button>
        </div>
-
+      { isPending && <div> Loading ... </div>}
     {listOfFriends.map((val) => {
       return  <>
         <div style={mystyle}> 
