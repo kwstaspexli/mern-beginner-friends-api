@@ -26,7 +26,7 @@ function App() {
     flexWrap: "wrap",
     justifyContent: "centre",
     alignItems: "centre",
-    flexGrow: "1",
+    flexGrow: "2",
   }
 
   const button = {
@@ -81,7 +81,7 @@ function App() {
 
 
     const deleteFriend = (id) => {
-      Axios.delete(`https://mern-beginner-friends-app.herokuapp.com/${id}`)
+      Axios.delete(`https://mern-beginner-friends-app.herokuapp.com/delete/${id}`)
       .then(() => {
         setListOfFriends(listOfFriends.filter((val) => {
           return val._id !== id;
