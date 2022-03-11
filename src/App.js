@@ -9,9 +9,8 @@ function App() {
     display: "flex",
     flexDirection: "column",
     flexWrap: "wrap",
-    justifyContent: "centre",
+    justifyContent: "start",
     alignItems: "centre",
-    flexGrow: "1",
     border: "2px solid",
     backgroundColor: "DodgerBlue",
     padding: "10px",
@@ -26,7 +25,7 @@ function App() {
     flexWrap: "wrap",
     justifyContent: "centre",
     alignItems: "centre",
-    flexGrow: "2",
+    flexGrow: "1",
   }
 
   const button = {
@@ -36,7 +35,12 @@ function App() {
     padding: "10px",
     fontFamily: "Arial",
   }
-
+  
+  const loading = {
+    display: "block",
+    marginLeft: "auto",
+    marginRight: "auto"
+  }
   const [name,setName] = useState("");
   const [age,setAge] = useState(0);
   const [listOfFriends, setListOfFriends] = useState([]);
@@ -66,6 +70,7 @@ function App() {
             age: age,
           },
         ]);
+        setIsPending(false);
       });
     };
 
@@ -78,6 +83,7 @@ function App() {
           return val._id == id ? {_id: id, name: val.name, age: newAge}
                                : val;
         }))
+        setIsPending(false);
       });
     };
 
@@ -89,11 +95,14 @@ function App() {
           return val._id !== id;
         })
         )
+        setIsPending(false);
       });
     };
 
 
-  return <div style={flex}>
+  return <div>
+    { isPending ? <div style={loading}> loading.. </div> : 
+    <div style={flex}>
     <div style={mystyle} >
     <input type="text" placeholder="name" 
       onChange={(event) => {
@@ -105,23 +114,23 @@ function App() {
       }} />
        <button onClick={addFriend}> Add Friend </button>
        </div>
-      { isPending && <div> Loading ... </div>}
-    {listOfFriends.map((val) => {
-      return  <>
-        <div style={mystyle}> 
-          <h3>name:{val.name}</h3>
-          <h3>age:{val.age}</h3>
+                    {listOfFriends.map((val) => {
+                      return  <>
+                        <div style={mystyle}> 
+                          <h3>name:{val.name}</h3>
+                          <h3>age:{val.age}</h3>
 
-          <button onClick={() => { updateFriend(val._id);}} 
-          style={button}>update</button>
+                          <button onClick={() => { updateFriend(val._id);}} 
+                          style={button}>update</button>
 
-          <button style={button}
-          onClick={() => {deleteFriend(val._id); }} >delete</button>
+                          <button style={button}
+                          onClick={() => {deleteFriend(val._id); }} >delete</button>
 
-        </div>
-      </>
-    })}
-  </div>;
-}
+                        </div>
+                      </>
+                    })}
+                    </div>}
+                  </div>
+      }
 
 export default App;
