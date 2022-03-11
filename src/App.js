@@ -84,7 +84,7 @@ function App() {
       Axios.delete(`https://mern-beginner-friends-app.herokuapp.com/${id}`)
       .then(() => {
         setListOfFriends(listOfFriends.filter((val) => {
-          return val._id != id;
+          return val._id !== id;
         })
         )
       });
